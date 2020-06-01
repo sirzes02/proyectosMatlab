@@ -1,45 +1,19 @@
-function [] = practica_3_code()
-clear
-clc
+function [count1, count2, y, s, nt_out] = neurona2(count1, count2, y, s,...
+    nt_out)
 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 beta = 2.5;
 theta = 0.2;
 Kr = 3;
 max_count = 24;
 delta_t = 1;
-count1 = ceil(beta/(delta_t * theta));
-count2 = count1;
-t_span = 800;
-y = 0:0;
 salida = 0;
-nt_out = 0:0;
-
-%Variables
-vectorTiempo = 1:delta_t:t_span;
-a = 0;
-s = 0:0;
-tamanio = ((t_span - 1) / delta_t) + 1;
-
-while(1)
-    a = input("Ingrese un valor entre 0 y 1: ");
-    if(a >= 0 && a <= 1)
-        break;
-    else
-        disp("Error, ingrese un valor correcto.");
-    end
-end
-
-for i = 1:tamanio
-    if(vectorTiempo(i) < 20)
-        s(i) = 0;
-    else
-        s(i) = a;
-    end
-end
+t_span = 450;
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 t = 1;
 while(t <= t_span)
-    %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+    %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
     if(s(t) < theta)
         y(t) = 0;
     else
@@ -60,8 +34,13 @@ while(t <= t_span)
             end
         end
     end
-    %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+    %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
     
+    t = t + delta_t;
+end
+
+t = 1;
+while(t <= t_span)
     %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
     if (y(t) == 1)
         salida = Kr/(count2 * delta_t);
@@ -79,8 +58,5 @@ while(t <= t_span)
     
     t = t + delta_t;
 end
-
-subplot(1, 2, 1), plot(vectorTiempo, y), subplot(1, 2, 2),...
-    plot(vectorTiempo, nt_out);
 
 end
