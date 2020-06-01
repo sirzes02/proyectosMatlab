@@ -42,8 +42,6 @@ end
 count2_1 = count2;
 count1_1 = count1;
 nt_out_1 = nt_out;
-nt_out_2 = nt_out;
-nt_out_3 = nt_out;
 
 neu1 = 0;
 neu2 = 0;
@@ -54,22 +52,11 @@ while(t <= t_span)
     [count1_1, count2_1, nt_out_1] = neuraFinal(beta, theta, Kr,...
         max_count, delta_t, count1_1, count2_1, y, salida, nt_out_1, s, t);
     
-%     [count1_2, count2_2, nt_out_2] = neuraFinal(beta, theta, Kr,...
-%         max_count, delta_t, count1_1, count2_1, y, salida, nt_out_2, s, t);
-%     
-%     [count1_3, count2_3, nt_out_3] = neuraFinal(beta, theta, Kr,...
-%         max_count, delta_t, count1_2, count2_2, y, salida, nt_out_3, s, t);
-%     
-%     n1 = nt_out - nt_out_3;
-%     n2 = nt_out_3 - nt_out_1;
-%     n3 = nt_out_2 - nt_out_2;
+    n1 = nt_out - nt_out_3;
+    n2 = nt_out_3 - nt_out_1;
+    n3 = nt_out_2
     
     t = t + delta_t;
 end
 
-% figure, plot(n1);
-% figure, plot(n2);
-% figure, plot(n3);
-figure, plot(nt_out_1);
-% figure, plot(nt_out_2);
-% figure, plot(nt_out_3);
+plot(nt_out_1);
