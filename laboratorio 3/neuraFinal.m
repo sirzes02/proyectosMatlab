@@ -1,19 +1,19 @@
-function [count1, count2, nt_out] = neuraFinal(beta, theta, Kr,...
-    max_count, delta_t, count1, count2, y, salida, nt_out, s, t)
+function [count1, count2, salida, y, nt_out] = neuraFinal(BETA, THETA,...
+    KR, MAX_COUNT, DELTA_T, count1, count2, y, salida, nt_out, s, t)
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-if(s(t) < theta)
+if(s(t) < THETA)
     y(t) = 0;
 else
-    if(s(t) == theta)
-        if(count1 >= beta/(s(t) * delta_t))
+    if(s(t) == THETA)
+        if(count1 >= BETA/(s(t) * DELTA_T))
             y(t) = 1;
             count1 = 0;
         else
             y(t) = 0;
         end
     else
-        if(count1 >= beta/((s(t) + theta) * delta_t))
+        if(count1 >= BETA/((s(t) + THETA) * DELTA_T))
             y(t) = 1;
             count1 = 0;
         else
@@ -26,12 +26,12 @@ end
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 if (y(t) == 1)
-    salida = Kr/(count2 * delta_t);
+    salida = KR/(count2 * DELTA_T);
     nt_out(t) = salida;
     count2 = 0;
 else
     count2 = count2 + 1;
-    if (max_count > count2 * delta_t)
+    if (MAX_COUNT > count2 * DELTA_T)
         nt_out(t) = salida;
     else
         nt_out(t) = 0;

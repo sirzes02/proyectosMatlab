@@ -57,6 +57,8 @@ while(t <= tamanio)
             end
         end
     end
+    
+    
     t = t + 1;
 end
 
