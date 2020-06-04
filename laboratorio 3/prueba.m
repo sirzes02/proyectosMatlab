@@ -74,14 +74,20 @@ for i = 1:tamanio
 end
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
+%%%%%%%%%%%%%%%%%%
+% Inicialización de parametros
 count1_1 = count1;
 count2_1 = count2;
 salida_1 = salida;
 y_1 = y;
 nt_out_1 = nt_out;
+%%%%%%%%%%%%%%%%%%
 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Ciclo de llamado
 t = 1;
 while(t <= t_span)
+    % Correcto? -> La ecuación? -> donde?
     [count1_1, count2_1, salida_1, y_1, nt_out_1] = neuraFinal(BETA,...
         THETA, KR,MAX_COUNT, DELTA_T, count1_1, count2_1, y_1, salida_1,...
         nt_out_1, s, t);
@@ -96,10 +102,14 @@ while(t <= t_span)
     
     t = t + DELTA_T;
 end
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-N1 = y - y_2;
-N2 = y_3 - y_1;
-N3 = y_2 - y_2;
+%%%%%%%%%%%%%%%%%%%%%%%%%
+% Ecuaciones
+N1 = y - nt_out_2;
+N2 = nt_out_3 - nt_out_1;
+N3 = nt_out_2 - nt_out_2;
+%%%%%%%%%%%%%%%%%%%%%%%%%
 
 subplot(3, 3, 1), plot(nt_out_1), title("Salida de nt-out-1"),...
     subplot(3, 3, 2), plot(y_1), title("Salida de y-1"),...
@@ -108,5 +118,5 @@ subplot(3, 3, 1), plot(nt_out_1), title("Salida de nt-out-1"),...
     subplot(3, 3, 5), plot(y_2), title("Salida de y-2"),...
     subplot(3, 3, 6), plot(N2), title("Neuroide 2 (N2)"),...
     subplot(3, 3, 7), plot(nt_out_1), title("Salida de nt-out-3"),...
-    subplot(3, 3, 8), plot(N3), title("Salida de y-3"),...
-    subplot(3, 3, 9), plot(y_1), title("Neuroide 3 (N3)");
+    subplot(3, 3, 8), plot(y_1), title("Salida de y-3"),...
+    subplot(3, 3, 9), plot(N3), title("Neuroide 3 (N3)");
