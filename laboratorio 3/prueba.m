@@ -37,7 +37,7 @@ DELTA_T = 1;
 count1 = ceil(BETA/(DELTA_T * THETA));
 count2 = count1;
 salida = 0;
-t_span = 200;%Mermado segun ejemplo del profesor
+t_span = 200; %Mermado segun ejemplo del profesor
 
 vectorTiempo = 1:DELTA_T:t_span;
 a = 0;
@@ -117,20 +117,19 @@ while(t <= t_span)
 end
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-
-%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%
 % Ecuaciones
 N1 = y_1 - nt_out_3;
 N2 = y_2 - nt_out_1;
 N3 = y_3 - nt_out_2;
-%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%
 
 %Punto 4
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-subplot(3, 2, 1), plot(y_1), title("Salida de y-1"),...
-    subplot(3, 2, 2), plot(N1), title("Neuroide 1 (N1)"),...
-    subplot(3, 2, 3), plot(y_2), title("Salida de y-2"),...
-    subplot(3, 2, 4), plot(N2), title("Neuroide 2 (N2)"),...
-    subplot(3, 2, 5), plot(y_3), title("Salida de y-3"),...
-    subplot(3, 2, 6), plot(N3), title("Neuroide 3 (N3)");
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+subplot(3, 2, 1), plot(y_1), title("Salida de y-1"), subplot(3, 2, 2),...
+    plot(N1), title("Neuroide 1 (N1)"), subplot(3, 2, 3), plot(y_2),...
+    title("Salida de y-2"), subplot(3, 2, 4), plot(N2),...
+    title("Neuroide 2 (N2)"), subplot(3, 2, 5), plot(y_3),...
+    title("Salida de y-3"), subplot(3, 2, 6), plot(N3),...
+    title("Neuroide 3 (N3)");
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
