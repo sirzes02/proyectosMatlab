@@ -22,9 +22,9 @@ clc
 % Ecuaciones del Neurodide->  Como aplicar? que es positivo y que se resta?
 % (nt_out)
 %   N1 = input - N3
-%   N2 = N3 - N1
-%   N3 = N2 - N2  ->  valor simpre 0?
-
+%   N2 = input - N1
+%   N3 = input - N2
+%   input = nt_out?
 
 % Punto 2
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -36,10 +36,8 @@ DELTA_T = 1;
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 count1 = ceil(BETA/(DELTA_T * THETA));
 count2 = count1;
-y = 0:0;
 salida = 0;
-nt_out = 0:0;
-t_span = 800;
+t_span = 200;%Mermado segun ejemplo del profesor
 
 vectorTiempo = 1:DELTA_T:t_span;
 a = 0;
@@ -77,47 +75,62 @@ end
 
 %%%%%%%%%%%%%%%%%%
 % Inicialización de parametros
-count1_1 = count1;
-count2_1 = count2;
-salida_1 = salida;
-y_1 = y;
-nt_out_1 = nt_out;
+count1_3 = 0;
+count2_3 = 0;
+salida_3 = 0;
+y_1 = 0;
+y_2 = 0;
+y_3 = 0;
+nt_out_1 = 0;
+nt_out_2 = 0;
+nt_out_3 = 0;
 %%%%%%%%%%%%%%%%%%
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Ciclo de llamado
 t = 1;
 while(t <= t_span)
-    % Correcto? -> La ecuación? -> donde?
+    % La ecuación? -> donde?
+    
+    %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
     [count1_1, count2_1, salida_1, y_1, nt_out_1] = neuraFinal(BETA,...
-        THETA, KR,MAX_COUNT, DELTA_T, count1_1, count2_1, y_1, salida_1,...
+        THETA, KR,MAX_COUNT, DELTA_T, count1_3, count2_3, y_1, salida_3,...
         nt_out_1, s, t);
+    %count1 - count1_3, count1 - count2_3, salida - salida_3?
+    %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
     
+    %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
     [count1_2, count2_2, salida_2, y_2, nt_out_2] = neuraFinal(BETA,...
-        THETA, KR,MAX_COUNT, DELTA_T, count1_1, count2_1, y_1, salida_1,...
-        nt_out_1, s, t);
-    
-    [count1_3, count2_3, salida_3, y_3, nt_out_3] = neuraFinal(BETA,...
-        THETA, KR,MAX_COUNT, DELTA_T, count1_2, count2_2, y_2, salida_2,...
+        THETA, KR,MAX_COUNT, DELTA_T, count1_1, count2_1, y_2, salida_1,...
         nt_out_2, s, t);
+    %count1 - count1_1, count1 - count2_1, salida - salida_1?
+    %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+    
+    %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+    [count1_3, count2_3, salida_3, y_3, nt_out_3] = neuraFinal(BETA,...
+        THETA, KR,MAX_COUNT, DELTA_T, count1_2, count2_2, y_3, salida_2,...
+        nt_out_3, s, t);
+    %count1 - count1_2, count1 - count2_2, salida - salida_2?
+    %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
     
     t = t + DELTA_T;
 end
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
+
 %%%%%%%%%%%%%%%%%%%%%%%%%
 % Ecuaciones
-N1 = y - nt_out_2;
-N2 = nt_out_3 - nt_out_1;
-N3 = nt_out_2 - nt_out_2;
+N1 = y_1 - nt_out_3;
+N2 = y_2 - nt_out_1;
+N3 = y_3 - nt_out_2;
 %%%%%%%%%%%%%%%%%%%%%%%%%
 
-subplot(3, 3, 1), plot(nt_out_1), title("Salida de nt-out-1"),...
-    subplot(3, 3, 2), plot(y_1), title("Salida de y-1"),...
-    subplot(3, 3, 3), plot(N1), title("Neuroide 1 (N1)"),...
-    subplot(3, 3, 4), plot(nt_out_2), title("Salida de nt-out-2"),...
-    subplot(3, 3, 5), plot(y_2), title("Salida de y-2"),...
-    subplot(3, 3, 6), plot(N2), title("Neuroide 2 (N2)"),...
-    subplot(3, 3, 7), plot(nt_out_3), title("Salida de nt-out-3"),...
-    subplot(3, 3, 8), plot(y_3), title("Salida de y-3"),...
-    subplot(3, 3, 9), plot(N3), title("Neuroide 3 (N3)");
+%Punto 4
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+subplot(3, 2, 1), plot(y_1), title("Salida de y-1"),...
+    subplot(3, 2, 2), plot(N1), title("Neuroide 1 (N1)"),...
+    subplot(3, 2, 3), plot(y_2), title("Salida de y-2"),...
+    subplot(3, 2, 4), plot(N2), title("Neuroide 2 (N2)"),...
+    subplot(3, 2, 5), plot(y_3), title("Salida de y-3"),...
+    subplot(3, 2, 6), plot(N3), title("Neuroide 3 (N3)");
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
