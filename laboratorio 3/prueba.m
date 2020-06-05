@@ -19,12 +19,10 @@ clc
 %   s: Valor del tren de pulsos
 %   t: Timpo (indexador de s)
 
-% Ecuaciones del Neurodide->  Como aplicar? que es positivo y que se resta?
-% (nt_out)
+% Ecuaciones del Neurodide.
 %   N1 = input - N3
 %   N2 = input - N1
 %   N3 = input - N2
-%   input = nt_out?
 
 % Punto 2
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -36,8 +34,7 @@ DELTA_T = 1;
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 count1 = ceil(BETA/(DELTA_T * THETA));
 count2 = count1;
-salida = 0;
-t_span = 200; %Mermado segun ejemplo del profesor
+t_span = 800;
 
 vectorTiempo = 1:DELTA_T:t_span;
 a = 0;
@@ -63,8 +60,8 @@ end
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%
-% Creacón del tren de pulsos
-for i = 1:tamanio
+% Creación de pulso
+for i = 1:t_span
     if(vectorTiempo(i) < 20)
         s(i) = 0;
     else
@@ -75,61 +72,58 @@ end
 
 %%%%%%%%%%%%%%%%%%
 % Inicialización de parametros
-count1_3 = 0;
-count2_3 = 0;
+count1_1 = count1;
+count1_2 = count1;
+count1_3 = count1;
+count2_1 = count1;
+count2_2 = count1;
+count2_3 = count1;
+salida_1 = 0;
+salida_2 = 0;
 salida_3 = 0;
-y_1 = 0;
-y_2 = 0;
-y_3 = 0;
-nt_out_1 = 0;
-nt_out_2 = 0;
-nt_out_3 = 0;
+y_1 = 0:0;
+y_2 = 0:0;
+y_3 = 0:0;
+nt_out_1 = 0:0;
+nt_out_2 = 0:0;
+nt_out_3 = 0:0;
+N1 = 0:0;
+N2 = 0:0;
+N3 = 0:0;
 %%%%%%%%%%%%%%%%%%
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-% Ciclo de llamado
-t = 1;
+% Ciclo de llamado a las neuronas
+t = 2;
 while(t <= t_span)
-    % La ecuación? -> donde?
-    
     %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-    [count1_1, count2_1, salida_1, y_1, nt_out_1] = neuraFinal(BETA,...
-        THETA, KR,MAX_COUNT, DELTA_T, count1_3, count2_3, y_1, salida_3,...
-        nt_out_1, s, t);
-    %count1 - count1_3, count1 - count2_3, salida - salida_3?
+    N1(t) = s(t) - nt_out_3(t - 1);
+    [count1_1, count2_1, salida_1, y_1(t), nt_out_1(t)] =...
+        neuraFinal(BETA, THETA, KR, MAX_COUNT, DELTA_T, count1_1,...
+        count2_1, salida_1, N1(t));
     %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
     
     %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-    [count1_2, count2_2, salida_2, y_2, nt_out_2] = neuraFinal(BETA,...
-        THETA, KR,MAX_COUNT, DELTA_T, count1_1, count2_1, y_2, salida_1,...
-        nt_out_2, s, t);
-    %count1 - count1_1, count1 - count2_1, salida - salida_1?
+    N2(t) = s(t) - nt_out_1(t);
+    [count1_2, count2_2, salida_2, y_2(t), nt_out_2(t)] =...
+        neuraFinal(BETA, THETA, KR, MAX_COUNT, DELTA_T, count1_2,...
+        count2_2, salida_2, N2(t));
     %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
     
     %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-    [count1_3, count2_3, salida_3, y_3, nt_out_3] = neuraFinal(BETA,...
-        THETA, KR,MAX_COUNT, DELTA_T, count1_2, count2_2, y_3, salida_2,...
-        nt_out_3, s, t);
-    %count1 - count1_2, count1 - count2_2, salida - salida_2?
+    N3(t) = s(t) - nt_out_2(t);
+    [count1_3, count2_3, salida_3, y_3(t), nt_out_3(t)] =...
+        neuraFinal(BETA, THETA, KR, MAX_COUNT, DELTA_T, count1_3,...
+        count2_3, salida_3, N3(t));
     %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
     
     t = t + DELTA_T;
 end
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-%%%%%%%%%%%%%%%%%%%%
-% Ecuaciones
-N1 = y_1 - nt_out_3;
-N2 = y_2 - nt_out_1;
-N3 = y_3 - nt_out_2;
-%%%%%%%%%%%%%%%%%%%%
-
 %Punto 4
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-subplot(3, 2, 1), plot(y_1), title("Salida de y-1"), subplot(3, 2, 2),...
-    plot(N1), title("Neuroide 1 (N1)"), subplot(3, 2, 3), plot(y_2),...
-    title("Salida de y-2"), subplot(3, 2, 4), plot(N2),...
-    title("Neuroide 2 (N2)"), subplot(3, 2, 5), plot(y_3),...
-    title("Salida de y-3"), subplot(3, 2, 6), plot(N3),...
-    title("Neuroide 3 (N3)");
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+subplot(3, 1, 1), plot(y_1), title("Salida de y-1"),...
+    subplot(3, 1, 2), plot(y_2), title("Salida de y-2"),...
+    subplot(3, 1, 3), plot(y_3), title("Salida de y-3");
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
